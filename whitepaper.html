@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MADDPG Whitepaper</title>
+    <link rel="stylesheet" href="css/whitepaper-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="api-body">
+    <div class="api-container">
+        <aside class="api-sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">MADDPG</a>
+            </div>
+            <nav class="api-nav">
+                <div class="nav-group">
+                    <h3>Getting Started</h3>
+                    <a href="#overview" class="nav-link active">Overview</a>
+                    <a href="#quickstart" class="nav-link">Quick Start</a>
+                    <a href="#authentication" class="nav-link">Authentication</a>
+                </div>
+                <div class="nav-group">
+                    <h3>Core Concepts</h3>
+                    <a href="#agents" class="nav-link">Agents</a>
+                    <a href="#environments" class="nav-link">Environments</a>
+                    <a href="#training" class="nav-link">Training</a>
+                </div>
+                <div class="nav-group">
+                    <h3>Advanced Topics</h3>
+                    <a href="#distributed-training" class="nav-link">Distributed Training</a>
+                    <a href="#hyperparameters" class="nav-link">Hyperparameters</a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="api-content">
+            <!-- All sections from previous messages go here -->
+            <!DOCTYPE html>
+<html lang="en">
+<!-- Head section remains the same -->
+
+<body class="api-body">
+    <div class="api-container">
+        <!-- Sidebar remains the same -->
+
+        <main class="api-content">
+            <!-- Overview Section -->
+            <section id="overview" class="section-container">
+                <h1>MADDPG API Documentation</h1>
+                <p class="intro">The MADDPG API provides a comprehensive framework for implementing multi-agent deep deterministic policy gradient systems. This documentation covers everything from basic setup to advanced implementation details.</p>
+                
+                <div class="info-box">
+                    <h4>Version Information</h4>
+                    <p>Current Version: v1.2.0</p>
+                    <p>Last Updated: March 2024</p>
+                </div>
+
+                <div class="diagram-container">
+                    <img src="images/MADDPG.png" alt="MADDPG Architecture Diagram" class="architecture-diagram">
+                    <div class="diagram-caption">
+                        <p>Figure 1: An overview of our multi-agent decentralized actor, centralized critic approach</p>
+                    </div>
+                </div>
+                
+                <div class="diagram-description">
+                    <p>The above diagram illustrates the core architecture of MADDPG, highlighting:</p>
+                    <ul>
+                        <li>Decentralized actors that operate independently using local observations</li>
+                        <li>A centralized critic that leverages global state information during training</li>
+                        <li>Policy gradient optimization that enables efficient multi-agent learning</li>
+                        <li>The flow of information between agents and the environment</li>
+                    </ul>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Decentralized Execution</h3>
+                        <p>Agents operate independently using local observations while learning from shared experiences.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Centralized Learning</h3>
+                        <p>Utilize global information during training for optimal policy development.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Scalable Architecture</h3>
+                        <p>Support for both single-machine and distributed training environments.</p>
+                    </div>
+                </div>
+
+                <!-- System Requirements and Compatibility sections as shown in previous message -->
+            </section>
+
+            <!-- Quick Start Section -->
+            <section id="quickstart" class="section-container">
+                <h1>Quick Start Guide</h1>
+                <p class="intro">Get your MADDPG implementation up and running in minutes with this quick start guide.</p>
+
+                <div class="installation-steps">
+                    <h2>Installation</h2>
+                    <div class="code-block">
+                        <pre><code>pip install maddpg-client</code></pre>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>Prerequisites</h4>
+                        <ul>
+                            <li>Python 3.8 or higher</li>
+                            <li>pip package manager</li>
+                            <li>Virtual environment (recommended)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="basic-usage">
+                    <h2>Basic Implementation</h2>
+                    <div class="code-block">
+                        <pre><code>from maddpg import Client, Environment
+
+# Initialize client
+client = Client('YOUR_API_KEY')
+
+# Create environment
+env = client.create_environment({
+    'type': 'cooperative',
+    'agents': 3,
+    'observation_space': [4, 2],
+    'action_space': [2, 1]
+})
+
+# Create agents
+agents = [client.create_agent({
+    'name': f'agent_{i}',
+    'policy': 'maddpg',
+    'observation_space': env.observation_space,
+    'action_space': env.action_space
+}) for i in range(3)]
+
+# Training loop
+for episode in range(1000):
+    observations = env.reset()
+    episode_reward = 0
+    
+    while not done:
+        # Get actions from each agent
+        actions = [agent.act(obs) for agent, obs 
+                  in zip(agents, observations)]
+        
+        # Environment step
+        next_obs, rewards, done, info = env.step(actions)
+        
+        # Update agents
+        for agent, obs, action, reward, next_ob in zip(
+            agents, observations, actions, rewards, next_obs):
+            agent.learn(obs, action, reward, next_ob)
+        
+        observations = next_obs
+        episode_reward += sum(rewards)
+    
+    print(f"Episode {episode}: {episode_reward}")</code></pre>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h2>Next Steps</h2>
+                    <div class="next-steps-grid">
+                        <a href="#authentication" class="next-step-card">
+                            <h3>Authentication</h3>
+                            <p>Set up your API credentials</p>
+                        </a>
+                        <a href="#environments" class="next-step-card">
+                            <h3>Environments</h3>
+                            <p>Learn about environment configuration</p>
+                        </a>
+                        <a href="#training" class="next-step-card">
+                            <h3>Training</h3>
+                            <p>Explore advanced training options</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+<section id="authentication" class="section-container">
+    <h1>Authentication</h1>
+    <p class="intro">Secure access to the MADDPG API requires proper authentication and key management.</p>
+
+    <div class="warning-box">
+        <h4>Security Notice</h4>
+        <p>Never expose your API keys in client-side code, public repositories, or share them with unauthorized users.</p>
+    </div>
+
+    <div class="auth-steps">
+        <h2>Getting Your API Key</h2>
+        <ol class="numbered-steps">
+            <li>
+                <h3>Create Account</h3>
+                <p>Register for a MADDPG account at our developer portal</p>
+            </li>
+            <li>
+                <h3>Verify Identity</h3>
+                <p>Complete the verification process</p>
+            </li>
+            <li>
+                <h3>Generate API Key</h3>
+                <p>Create a new API key from your dashboard</p>
+            </li>
+        </ol>
+    </div>
+
+    <div class="implementation-guide">
+        <h2>Implementation</h2>
+        <div class="code-block">
+            <pre><code># Python Implementation
+from maddpg import Client
+
+client = Client(
+    api_key='your_api_key_here',
+    environment='production',
+    timeout=30
+)
+
+# Environment Variables (Recommended)
+import os
+from maddpg import Client
+
+client = Client(
+    api_key=os.getenv('MADDPG_API_KEY'),
+    environment=os.getenv('MADDPG_ENV', 'production')
+)</code></pre>
+        </div>
+
+        <div class="info-box">
+            <h4>API Key Types</h4>
+            <table class="api-table">
+                <tr>
+                    <th>Type</th>
+                    <th>Usage</th>
+                    <th>Limitations</th>
+                </tr>
+                <tr>
+                    <td>Development</td>
+                    <td>Testing and development</td>
+                    <td>Rate limited, test environments only</td>
+                </tr>
+                <tr>
+                    <td>Production</td>
+                    <td>Live deployments</td>
+                    <td>Full access, billing applies</td>
+                </tr>
+                <tr>
+                    <td>Enterprise</td>
+                    <td>High-volume usage</td>
+                    <td>Custom limits, dedicated support</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Agents Section -->
+<section id="agents" class="section-container">
+    <h1>Agents</h1>
+    <p class="intro">Agents are the core components of MADDPG, capable of learning and executing policies in multi-agent environments.</p>
+
+    <div class="agent-types">
+        <h2>Agent Types</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>MADDPG Agent</h3>
+                <p>Standard agent using centralized training with decentralized execution.</p>
+                <ul class="feature-list">
+                    <li>Continuous action spaces</li>
+                    <li>Shared critic network</li>
+                    <li>Local observations</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Hierarchical Agent</h3>
+                <p>Multi-level policy structure for complex tasks.</p>
+                <ul class="feature-list">
+                    <li>Temporal abstraction</li>
+                    <li>Sub-policy management</li>
+                    <li>Goal-directed behavior</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Meta Agent</h3>
+                <p>Rapid adaptation to new tasks and environments.</p>
+                <ul class="feature-list">
+                    <li>Fast learning</li>
+                    <li>Transfer learning</li>
+                    <li>Task generalization</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="agent-creation">
+        <h2>Creating an Agent</h2>
+        <div class="code-block">
+            <pre><code>agent = client.create_agent({
+    'name': 'agent_1',
+    'type': 'maddpg',
+    'observation_space': {
+        'shape': [4, 2],
+        'type': 'continuous'
+    },
+    'action_space': {
+        'shape': [2, 1],
+        'type': 'continuous'
+    },
+    'network_config': {
+        'actor': {
+            'hidden_layers': [256, 256],
+            'activation': 'relu',
+            'learning_rate': 1e-3
+        },
+        'critic': {
+            'hidden_layers': [256, 256],
+            'activation': 'relu',
+            'learning_rate': 1e-3
+        }
+    }
+})</code></pre>
+        </div>
+    </div>
+
+    <div class="agent-methods">
+        <h2>Core Methods</h2>
+        <table class="api-table">
+            <tr>
+                <th>Method</th>
+                <th>Description</th>
+                <th>Parameters</th>
+            </tr>
+            <tr>
+                <td>agent.act(observation)</td>
+                <td>Get action for given observation</td>
+                <td>observation: numpy array</td>
+            </tr>
+            <tr>
+                <td>agent.learn(experience)</td>
+                <td>Update policy from experience</td>
+                <td>experience: Experience tuple</td>
+            </tr>
+            <tr>
+                <td>agent.save_model(path)</td>
+                <td>Save agent's model</td>
+                <td>path: string</td>
+            </tr>
+            <tr>
+                <td>agent.load_model(path)</td>
+                <td>Load saved model</td>
+                <td>path: string</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="example-implementations">
+        <h2>Example Implementations</h2>
+        <div class="tabs">
+            <div class="tab-content">
+                <h3>Basic Agent Usage</h3>
+                <div class="code-block">
+                    <pre><code># Create and use a basic agent
+agent = client.create_agent(config)
+
+# Training loop
+observation = environment.reset()
+for step in range(max_steps):
+    action = agent.act(observation)
+    next_obs, reward, done, info = environment.step(action)
+    agent.learn(observation, action, reward, next_obs, done)
+    observation = next_obs</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Environments Section -->
+<section id="environments" class="section-container">
+    <h1>Environments</h1>
+    <p class="intro">MADDPG environments provide the foundation for multi-agent interactions and learning.</p>
+
+    <div class="environment-types">
+        <h2>Environment Types</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Cooperative</h3>
+                <p>Agents work together to achieve shared goals.</p>
+                <ul class="feature-list">
+                    <li>Shared rewards</li>
+                    <li>Team-based objectives</li>
+                    <li>Collaborative tasks</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Competitive</h3>
+                <p>Agents compete for resources or objectives.</p>
+                <ul class="feature-list">
+                    <li>Zero-sum games</li>
+                    <li>Resource competition</li>
+                    <li>Adversarial scenarios</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Mixed</h3>
+                <p>Combination of cooperative and competitive elements.</p>
+                <ul class="feature-list">
+                    <li>Team vs team</li>
+                    <li>Alliance formation</li>
+                    <li>Dynamic relationships</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="environment-creation">
+        <h2>Creating an Environment</h2>
+        <div class="code-block">
+            <pre><code>environment = client.create_environment({
+    'type': 'cooperative',
+    'scenario': 'predator_prey',
+    'dimensions': {
+        'width': 100,
+        'height': 100
+    },
+    'agents': {
+        'count': 4,
+        'types': ['predator', 'predator', 'prey', 'prey']
+    },
+    'physics': {
+        'collision_detection': True,
+        'momentum': True,
+        'friction': 0.1
+    },
+    'rewards': {
+        'capture': 10.0,
+        'collision': -1.0,
+        'time_penalty': -0.01
+    }
+})</code></pre>
+        </div>
+    </div>
+
+    <div class="environment-methods">
+        <h2>Core Methods</h2>
+        <table class="api-table">
+            <tr>
+                <th>Method</th>
+                <th>Description</th>
+                <th>Returns</th>
+            </tr>
+            <tr>
+                <td>env.reset()</td>
+                <td>Reset environment to initial state</td>
+                <td>Initial observations</td>
+            </tr>
+            <tr>
+                <td>env.step(actions)</td>
+                <td>Execute actions and advance simulation</td>
+                <td>observations, rewards, done, info</td>
+            </tr>
+            <tr>
+                <td>env.render()</td>
+                <td>Visualize current state</td>
+                <td>RGB array or window</td>
+            </tr>
+            <tr>
+                <td>env.close()</td>
+                <td>Clean up environment resources</td>
+                <td>None</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="custom-environments">
+        <h2>Custom Environments</h2>
+        <div class="code-block">
+            <pre><code>from maddpg.environment import BaseEnvironment
+
+class CustomEnvironment(BaseEnvironment):
+    def __init__(self, config):
+        super().__init__(config)
+        self.setup_custom_parameters()
+
+    def reset(self):
+        # Reset logic
+        return initial_observations
+
+    def step(self, actions):
+        # Step logic
+        return observations, rewards, done, info
+
+    def render(self):
+        # Visualization logic
+        return rendered_frame</code></pre>
+        </div>
+    </div>
+</section>
+
+<!-- Training Section -->
+<section id="training" class="section-container">
+    <h1>Training</h1>
+    <p class="intro">Configure and optimize the training process for your multi-agent system.</p>
+
+    <div class="training-setup">
+        <h2>Basic Training Configuration</h2>
+        <div class="code-block">
+            <pre><code>training_config = {
+    'episodes': 10000,
+    'steps_per_episode': 200,
+    'batch_size': 64,
+    'update_frequency': 100,
+    'checkpoint_frequency': 1000,
+    'evaluation_frequency': 500,
+    'learning_rates': {
+        'actor': 1e-3,
+        'critic': 1e-3
+    },
+    'memory': {
+        'capacity': 1000000,
+        'prioritized': True
+    },
+    'exploration': {
+        'initial_epsilon': 1.0,
+        'final_epsilon': 0.1,
+        'decay_steps': 1000000
+    }
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="training-features">
+        <h2>Key Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Experience Replay</h3>
+                <p>Store and reuse past experiences for stable learning.</p>
+                <ul class="feature-list">
+                    <li>Prioritized sampling</li>
+                    <li>Efficient memory management</li>
+                    <li>Custom replay strategies</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Policy Updates</h3>
+                <p>Optimize agent policies through gradient updates.</p>
+                <ul class="feature-list">
+                    <li>Actor-Critic architecture</li>
+                    <li>Target network updates</li>
+                    <li>Gradient clipping</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Monitoring</h3>
+                <p>Track and visualize training progress.</p>
+                <ul class="feature-list">
+                    <li>Performance metrics</li>
+                    <li>Real-time visualization</li>
+                    <li>Checkpoint management</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="training-loop">
+        <h2>Training Loop Implementation</h2>
+        <div class="code-block">
+            <pre><code># Initialize training
+trainer = client.create_trainer(training_config)
+env = client.create_environment(env_config)
+agents = trainer.create_agents(agent_config)
+
+# Training loop
+for episode in range(training_config['episodes']):
+    observations = env.reset()
+    episode_rewards = []
+    
+    for step in range(training_config['steps_per_episode']):
+        # Get actions
+        actions = [agent.act(obs) for agent, obs in zip(agents, observations)]
+        
+        # Environment step
+        next_obs, rewards, done, info = env.step(actions)
+        
+        # Store experience
+        trainer.store_experience(observations, actions, rewards, next_obs, done)
+        
+        # Update policies
+        if step % training_config['update_frequency'] == 0:
+            trainer.update_policies()
+        
+        observations = next_obs
+        episode_rewards.append(rewards)
+        
+        if done:
+            break
+    
+    # Evaluation and logging
+    if episode % training_config['evaluation_frequency'] == 0:
+        trainer.evaluate_policies()
+        trainer.log_metrics()
+    
+    # Save checkpoint
+    if episode % training_config['checkpoint_frequency'] == 0:
+        trainer.save_checkpoint()</code></pre>
+        </div>
+    </div>
+
+    <div class="monitoring">
+        <h2>Monitoring and Visualization</h2>
+        <div class="code-block">
+            <pre><code># Set up monitoring
+monitor = client.create_monitor({
+    'metrics': ['reward', 'loss', 'policy_entropy'],
+    'visualization': {
+        'type': 'tensorboard',
+        'log_dir': './logs'
+    },
+    'export': {
+        'format': 'csv',
+        'frequency': 100
+    }
+})</code></pre>
+        </div>
+    </div>
+</section>
+<!-- Advanced Topics Section -->
+<section id="distributed-training" class="section-container">
+    <h1>Distributed Training</h1>
+    <p class="intro">Scale your MADDPG implementation across multiple machines for faster training and larger environments.</p>
+
+    <div class="warning-box">
+        <h4>Enterprise Feature</h4>
+        <p>Distributed training requires an Enterprise API key and appropriate infrastructure setup.</p>
+    </div>
+
+    <div class="architecture-overview">
+        <h2>Distributed Architecture</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Parameter Server</h3>
+                <p>Central server managing policy updates and synchronization.</p>
+                <ul class="feature-list">
+                    <li>Policy distribution</li>
+                    <li>Gradient aggregation</li>
+                    <li>Load balancing</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Worker Nodes</h3>
+                <p>Distributed nodes handling environment simulation and experience collection.</p>
+                <ul class="feature-list">
+                    <li>Parallel rollouts</li>
+                    <li>Local experience buffers</li>
+                    <li>Asynchronous updates</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Experience Replay</h3>
+                <p>Distributed memory management for experience storage.</p>
+                <ul class="feature-list">
+                    <li>Sharded storage</li>
+                    <li>Priority sampling</li>
+                    <li>Memory optimization</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="distributed-setup">
+        <h2>Setting Up Distributed Training</h2>
+        <div class="code-block">
+            <pre><code># Initialize distributed training
+cluster = client.create_cluster({
+    'nodes': [
+        {
+            'role': 'parameter_server',
+            'address': 'ps.example.com:8000',
+            'resources': {
+                'cpu': 16,
+                'memory': '64GB',
+                'gpu': 2
+            }
+        },
+        {
+            'role': 'worker',
+            'count': 4,
+            'resources': {
+                'cpu': 8,
+                'memory': '32GB',
+                'gpu': 1
+            }
+        }
+    ],
+    'networking': {
+        'protocol': 'grpc',
+        'compression': True,
+        'timeout': 30
+    },
+    'fault_tolerance': {
+        'checkpoint_frequency': 1000,
+        'max_failures': 2,
+        'recovery_policy': 'restart'
+    }
+})</code></pre>
+        </div>
+    </div>
+
+    <div class="monitoring-distributed">
+        <h2>Monitoring Distributed Training</h2>
+        <div class="code-block">
+            <pre><code># Set up distributed monitoring
+monitor = cluster.create_monitor({
+    'metrics': {
+        'system': ['cpu', 'memory', 'network', 'gpu'],
+        'training': ['reward', 'loss', 'throughput'],
+        'aggregation': 'mean'
+    },
+    'visualization': {
+        'dashboard_url': 'http://monitor.example.com',
+        'update_frequency': 10
+    },
+    'alerts': {
+        'node_failure': True,
+        'performance_degradation': True
+    }
+})</code></pre>
+        </div>
+    </div>
+</section>
+
+<section id="hyperparameters" class="section-container">
+    <h1>Hyperparameter Tuning</h1>
+    <p class="intro">Optimize your MADDPG implementation through systematic hyperparameter search and tuning.</p>
+
+    <div class="parameter-types">
+        <h2>Key Parameters</h2>
+        <table class="api-table">
+            <tr>
+                <th>Parameter</th>
+                <th>Range</th>
+                <th>Impact</th>
+                <th>Recommendation</th>
+            </tr>
+            <tr>
+                <td>Learning Rate</td>
+                <td>1e-5 to 1e-2</td>
+                <td>Training stability and speed</td>
+                <td>Start with 1e-3, adjust based on loss curves</td>
+            </tr>
+            <tr>
+                <td>Batch Size</td>
+                <td>32 to 512</td>
+                <td>Training efficiency and stability</td>
+                <td>128 for most cases, larger for more stable gradients</td>
+            </tr>
+            <tr>
+                <td>Network Architecture</td>
+                <td>Various</td>
+                <td>Model capacity and learning ability</td>
+                <td>Start with [256, 256] hidden layers</td>
+            </tr>
+            <tr>
+                <td>Discount Factor</td>
+                <td>0.9 to 0.99</td>
+                <td>Future reward consideration</td>
+                <td>0.99 for most long-term tasks</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="tuning-methods">
+        <h2>Automated Tuning</h2>
+        <div class="code-block">
+            <pre><code># Initialize hyperparameter tuning
+tuner = client.create_tuner({
+    'method': 'population_based_training',
+    'population_size': 10,
+    'generations': 50,
+    'parameters': {
+        'learning_rate': {
+            'type': 'float',
+            'range': [1e-5, 1e-2],
+            'scale': 'log'
+        },
+        'network_architecture': {
+            'type': 'categorical',
+            'values': [
+                [128, 128],
+                [256, 256],
+                [512, 512],
+                [256, 256, 256]
+            ]
+        },
+        'batch_size': {
+            'type': 'categorical',
+            'values': [32, 64, 128, 256]
+        }
+    },
+    'objective': {
+        'metric': 'episode_reward',
+        'mode': 'max'
+    },
+    'resources': {
+        'cpu_per_trial': 4,
+        'gpu_per_trial': 1
+    }
+})</code></pre>
+        </div>
+    </div>
+
+    <div class="visualization">
+        <h2>Results Analysis</h2>
+        <div class="code-block">
+            <pre><code># Analyze tuning results
+results = tuner.get_results()
+
+# Visualize parameter importance
+tuner.plot_parameter_importance()
+
+# Get best configuration
+best_config = tuner.get_best_config()
+
+# Export results
+tuner.export_results('tuning_results.csv')</code></pre>
+        </div>
+    </div>
+
+    <div class="best-practices">
+        <h2>Tuning Best Practices</h2>
+        <div class="info-box">
+            <h4>Recommendations</h4>
+            <ul>
+                <li>Start with a small parameter space and gradually expand</li>
+                <li>Use log-scale for learning rates and similar parameters</li>
+                <li>Consider parameter dependencies in your search strategy</li>
+                <li>Monitor computational resources during tuning</li>
+                <li>Save and version control your best configurations</li>
+            </ul>
+        </div>
+    </div>
+</section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create sections object
+            const sections = {};
+            document.querySelectorAll('section[id]').forEach(section => {
+                sections[section.id] = section.offsetTop;
+            });
+
+            // Handle scroll
+            window.onscroll = function() {
+                const scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+
+                for (let id in sections) {
+                    const section = document.getElementById(id);
+                    const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
+
+                    if (section.offsetTop <= scrollPosition + 100) {
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        navLink.classList.add('active');
+                    }
+                }
+            };
+
+            // Smooth scroll to sections
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 50,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
