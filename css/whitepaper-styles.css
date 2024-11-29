@@ -1,0 +1,347 @@
+/* Reset and base styles */
+.api-body {
+    background: #ffffff;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.api-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.api-sidebar {
+    width: 300px;
+    background: #f8f9fa;
+    border-right: 1px solid #e0e0e0;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-header {
+    padding: 2rem 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fff;
+}
+
+.sidebar-header .logo {
+    color: #2563eb;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.api-nav {
+    padding: 1.5rem 0;
+}
+
+.nav-group {
+    margin-bottom: 2rem;
+    padding: 0 1.5rem;
+}
+
+.nav-group h3 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    padding-left: 0.5rem;
+}
+
+.nav-group .nav-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin: 0.25rem 0;
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 0.875rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.nav-group .nav-link:hover {
+    background: #f1f5f9;
+    color: #2563eb;
+}
+
+.nav-group .nav-link.active {
+    background: #e0e7ff;
+    color: #2563eb;
+    font-weight: 500;
+}
+
+/* Main Content Styles */
+.api-content {
+    flex: 1;
+    margin-left: 300px;
+    padding: 3rem 4rem;
+    max-width: 900px;
+    background: #fff;
+}
+
+.api-content h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+}
+
+.api-content h2 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 3rem 0 1.5rem;
+    letter-spacing: -0.025em;
+}
+
+.api-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 2rem 0 1rem;
+}
+
+.api-content p {
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.intro {
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+
+/* Code Blocks */
+.code-block {
+    background: #1e1e1e;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+}
+
+.code-block pre {
+    margin: 0;
+}
+
+.code-block code {
+    font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+    font-size: 0.875rem;
+    color: #e5e7eb;
+    line-height: 1.7;
+}
+
+/* Info and Warning Boxes */
+.info-box, .warning-box {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.info-box {
+    border-left: 4px solid #2563eb;
+}
+
+.warning-box {
+    border-left: 4px solid #dc2626;
+    background: #fef2f2;
+}
+
+.info-box h4, .warning-box h4 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* API Table */
+.api-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.875rem;
+}
+
+.api-table th,
+.api-table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e5e7eb;
+}
+
+.api-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #1f2937;
+    text-align: left;
+}
+
+.api-table td {
+    color: #4b5563;
+}
+
+/* Example Box */
+.example-box {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.example-box h3 {
+    margin-top: 0;
+    font-size: 1.25rem;
+    color: #111827;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .api-sidebar {
+        width: 260px;
+    }
+    
+    .api-content {
+        margin-left: 260px;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .api-sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .api-content {
+        margin-left: 0;
+        padding: 1.5rem;
+    }
+    
+    .api-content h1 {
+        font-size: 2rem;
+    }
+    
+    .api-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Additional component styles */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.feature-card {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.compatibility-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.compatibility-list li {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.compatibility-list li:last-child {
+    border-bottom: none;
+}
+
+.next-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.next-step-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+.next-step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.diagram-container {
+    margin: 40px 0;
+    text-align: center;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 243, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+}
+
+.architecture-diagram {
+    max-width: 90%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    border-radius: 5px;
+    background: #ffffff;
+}
+
+.diagram-caption {
+    color: #000000;
+    font-size: 0.95rem;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+.diagram-description {
+    margin-top: 30px;
+    color: #000000;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.diagram-description li {
+    margin: 12px 0;
+    padding-left: 24px;
+    position: relative;
+    color: #000000;
+}
+
+.diagram-description li:before {
+    content: "•";
+    color: #2563eb;
+    position: absolute;
+    left: 0;
+    font-size: 1.2em;
+}
